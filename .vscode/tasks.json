@@ -1,0 +1,24 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build C++ File",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g", // Generates debug information to use with GDB debugger
+                "${file}", // The currently open file
+                "-o", // Specifies the output file
+                "${fileDirname}/${fileBasenameNoExtension}" // Output file name without extension
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "Generated task by ChatGPT to compile a C++ file."
+        }
+    ]
+}
