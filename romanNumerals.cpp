@@ -17,9 +17,9 @@ int main(){
     cout << "Enter a number between 1 and 3999: ";
     cin >> number;
 
-    if (number <= 0 || number >= 4000) {
-        cout << "Number out of range." << endl;
-        return 0;
+    while(number <= 0 || number >= 4000) {
+        cout << "Number out of range. Please enter a number between 1 and 3999: " << endl;
+        cin >> number;
     }
 
     while(number > 0){

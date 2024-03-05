@@ -14,13 +14,30 @@ int main(){
         timesCompounded,
         finalBalance;
     
-    //input
+    //input followed by validation
     cout << "What is your principal?" << endl;
     cin >> principal;
+    
+    while (principal < 0){
+        cout << "Please enter a positive number." << endl;
+        cin >> principal;
+    }
+
     cout << "what is your interest rate?" << endl;
     cin >> interestRate;
+    
+    while (interestRate < 0){
+        cout << "Please enter a positive number." << endl;
+        cin >> interestRate;
+    }
+
     cout << "How many times is your interest compounded per year?" << endl;
     cin >> timesCompounded;
+
+    while (timesCompounded < 0){
+        cout << "Please enter a whole positive number." << endl;
+        cin >> timesCompounded;
+    }
 
 
     cout << "Interest Rate:    " << right << setw(10) << interestRate << "%" << endl;
