@@ -19,11 +19,10 @@ int main(){
 
     //verify file exists and read from file
     if(inputFile){
-        //reading start month
+        
         inputFile >> month;
         startMonth = month;
 
-        //reading end month
         inputFile >> month;
         endMonth = month;
 
@@ -32,16 +31,28 @@ int main(){
             totalRainfall += rainfall;
             months++;
         }
+    } else {
+        cout << "File not found." << endl;
+        return 1;
     }
 
     //close file
     inputFile.close();
 
-    averageRainfall = totalRainfall / months;
+    //verify months is not 0
+    if(months == 0){
+        cout << "No data was read from the file." << endl;
+        return 1;
 
-    //output
-    cout << "The total rainfall for " << startMonth << " - " << endMonth << " is " << totalRainfall << " inches." << endl;
-    cout << "And the average monthly rainfall is " << averageRainfall << " inches." << endl;
+        //if months is not 0 (data was read), calculate averageRainfall
+    } else {
 
-    return 0;
+        averageRainfall = totalRainfall / months;
+
+        //output
+        cout << "The total rainfall for " << startMonth << " - " << endMonth << " is " << totalRainfall << " inches." << endl;
+        cout << "And the average monthly rainfall is " << averageRainfall << " inches." << endl;
+
+        return 0;
+    }
 }
