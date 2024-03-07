@@ -23,6 +23,10 @@ int main(){
     cout << "Enter any number of seconds: ";
     cin >> secondsInputted;
 
+    while(secondsInputted < 0){
+        cout << "Please enter a positive number: ";
+        cin >> secondsInputted;
+    }
     /*
     Compare the seconds inputted to the number of seconds in a day, hour, and minute.
     
