@@ -35,7 +35,7 @@ int main(){
 
         outputFile << "<div>\n\t<h1>" << name << "</h1>\n";
         outputFile << "\t<div>I am " << age << " years</div>\n";
-        outputFile << "\t<div>I am a " << job << " with " << experience << "year(s) of experience.</div>\n</div>";
+        outputFile << "\t<div>I am a " << job << " with " << experience << " year(s) of experience.</div>\n</div>";
 
         return 0;
     }
