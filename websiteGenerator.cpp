@@ -37,6 +37,8 @@ int main(){
         outputFile << "\t<div>I am " << age << " years old.</div>\n";
         outputFile << "\t<div>I am a " << job << " with " << experience << " year(s) of experience.</div>\n</div>";
 
+        outputFile.close();
+        
         return 0;
     }
 }
