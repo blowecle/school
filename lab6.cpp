@@ -6,12 +6,14 @@ using namespace std;
 //function prototypes
 void getInput(int &spoolsOrdered, int &spoolsInStock, float &specialShippingCharge);
 void displayOrderInfo(int spoolsOrdered, int spoolsInStock, float specialShippingCharge);
+bool isValidOrder(int input);
 
 //constant definitions
 const int SHIPPING_CHARGE = 10;
 const int SPOOL_COST = 100;
 
 int main(){
+
     //var declaration
     int spoolsOrdered,
         spoolsInStock;
@@ -30,20 +32,20 @@ void getInput(int &spoolsOrdered, int &spoolsInStock, float &specialShippingChar
     cout << "How many spools are being ordered?" << endl;
     cin >> spoolsOrdered;
 
-    while(spoolsOrdered < 1){
+    while(!isValidOrder(spoolsOrdered)){
         cout << "Please enter a number greater than zero." << endl;
         cin >> spoolsOrdered;
     }
 
     cout << "How many spools are in stock?" << endl;
     cin >> spoolsInStock;
-
+    cout << "spoolsInStock: " << spoolsInStock << "\n";
     while(spoolsInStock < 0){
         cout << "Please enter a number greater than or equal to zero." << endl;
         cin >> spoolsInStock;
     }
 
-    cout << "Are there any special shipping charges? (Enter 0 if there are none)" << endl;
+    cout << "Are there any special shipping charges? (Enter 0 if there are none):" << endl;
     cin >> specialShippingCharge;
 
     while(specialShippingCharge < 0){
@@ -75,4 +77,8 @@ void displayOrderInfo(int spoolsOrdered,int spoolsInStock ,float specialShipping
     }
 
     cout << "Total: $" << (spoolsOrdered * SPOOL_COST) + (SHIPPING_CHARGE * spoolsOrdered) + specialShippingCharge << endl;
+}
+
+bool isValidOrder(int input){
+    return input > 0;
 }
