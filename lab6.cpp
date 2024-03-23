@@ -1,18 +1,22 @@
 #include<iostream>
-#include<string>
 #include<iomanip>
 #include<cstdlib>
+#include<cmath>
+#include<sstream>
 using namespace std;
 
 //function prototypes
 void getInput(int &spoolsOrdered, int &spoolsInStock, float &specialShippingCharge);
 void displayOrderInfo(int spoolsOrdered, int spoolsInStock, float specialShippingCharge);
-bool isValidOrder(int input);
 bool isInStock(int spoolsOrdered, int spoolsInStock);
+float roundToNearestCent(float value);
+int getInt(int min, string prompt);
 
 //constant definitions
 const int SHIPPING_CHARGE = 10;
 const int SPOOL_COST = 100;
+const int LEFT_WIDTH = 20;
+const int RIGHT_WIDTH = 10;
 
 int main(){
     //clear previous output
@@ -33,72 +37,72 @@ int main(){
 //function definitions
 void getInput(int &spoolsOrdered, int &spoolsInStock, float &specialShippingCharge){
     
-    cout << "How many spools are being ordered?" << endl;
-    cin >> spoolsOrdered;
+    cout << "Welcome to the Spool Order Calculator.\n\n";
+    cout << "Please enter the following information:";
 
-    while(!isValidOrder(spoolsOrdered)){
-        cout << "Please enter a number greater than zero." << endl;
-        cin >> spoolsOrdered;
-    }
+    spoolsOrdered = getInt(1, "\nHow many spools are being ordered?\n");
+    spoolsInStock = getInt(0, "\nHow many spools are in stock?\n");
 
-    cout << "How many spools are in stock?" << endl;
-    cin >> spoolsInStock;
-
-    while(spoolsInStock < 0){
-        cout << "Please enter a number greater than or equal to zero." << endl;
-        cin >> spoolsInStock;
-    }
-
-    cout << "Are there any special shipping charges? (Enter 0 if there are none):" << endl;
+    cout << "\nAre there any special shipping charges? (Enter 0 if there are none):\n";
     cin >> specialShippingCharge;
 
     while(specialShippingCharge < 0){
-        cout << "Please enter a number greater than or equal to zero." << endl;
+        cout << "\nPlease enter a positive number:\n";
         cin >> specialShippingCharge;
     }
 }
 
 void displayOrderInfo(int spoolsOrdered,int spoolsInStock ,float specialShippingCharge){
-    cout << "Spools ordered: " << spoolsOrdered << endl;
-    cout << "Spools in stock: " << spoolsInStock << endl;
-    
-    if(!isInStock(spoolsOrdered, spoolsInStock)){
-        cout << "Spools on backorder: " << spoolsOrdered - spoolsInStock << endl;
-    } else {
-        cout << "Spools on backorder: 0" << endl;
-    }
 
-    if(isInStock(spoolsOrdered, spoolsInStock)){
-        cout << "Subtotal: $" << spoolsOrdered * SPOOL_COST << endl;
-    } else {
-        cout << "Subtotal: $" << spoolsInStock * SPOOL_COST << endl;
-    }
-    
-    if(specialShippingCharge > 0){
-        if(isInStock(spoolsOrdered, spoolsInStock)){
-            cout << "Shipping: $" << (SHIPPING_CHARGE * spoolsOrdered) + specialShippingCharge << endl;
-            } else {
-            cout << "Shipping: $" << (SHIPPING_CHARGE * spoolsInStock) + specialShippingCharge << endl;
-            }
-    } else {
-        if(isInStock(spoolsOrdered, spoolsInStock)){
-            cout << "Shipping: $" << (SHIPPING_CHARGE * spoolsOrdered) << endl;
-        } else {
-            cout << "Shipping: $" << (SHIPPING_CHARGE * spoolsInStock) << endl;
-        }
-    }
+    cout << "\n\n*******************************\n\n";
+    cout << left << setw(LEFT_WIDTH) << "Spools ordered:" << right << setw(RIGHT_WIDTH) << spoolsOrdered << endl;
+    cout << left << setw(LEFT_WIDTH) << "Spools in stock:" << right << setw(RIGHT_WIDTH) << spoolsInStock << endl;
 
-    if(isInStock(spoolsOrdered, spoolsInStock)){
-        cout << "Total: $" << (spoolsOrdered * SPOOL_COST) + (SHIPPING_CHARGE * spoolsOrdered) + specialShippingCharge << endl;
-    } else {
-        cout << "Total: $" << (spoolsInStock * SPOOL_COST) + (SHIPPING_CHARGE * spoolsInStock) + specialShippingCharge << endl;
-    }
-}
+    int backOrder = isInStock(spoolsOrdered, spoolsInStock) ? 0 : spoolsOrdered - spoolsInStock;
+    cout << left << setw(LEFT_WIDTH) << "Spools on backorder:" << right << setw(RIGHT_WIDTH) << backOrder << endl;
 
-bool isValidOrder(int input){
-    return input > 0;
+    float subtotal = isInStock(spoolsOrdered, spoolsInStock) ? spoolsOrdered * SPOOL_COST : spoolsInStock * SPOOL_COST;
+    cout << left << setw(LEFT_WIDTH) << "Subtotal:" << "$" << right << setw(RIGHT_WIDTH - 1) << fixed << setprecision(2) << subtotal << endl;
+
+    float shippingCost = (isInStock(spoolsOrdered, spoolsInStock) ? SHIPPING_CHARGE * spoolsOrdered : SHIPPING_CHARGE * spoolsInStock) + specialShippingCharge;
+    cout << left << setw(LEFT_WIDTH) << "Shipping:" << "$" << right << setw(RIGHT_WIDTH - 1) << fixed << setprecision(2) << shippingCost << endl;
+
+    float total = subtotal + shippingCost;
+    cout << left << setw(LEFT_WIDTH) << "Total:" << "$" << right << setw(RIGHT_WIDTH - 1) << fixed << setprecision(2) << total << "\n\n";
 }
 
 bool isInStock(int spoolsOrdered, int spoolsInStock){
     return spoolsOrdered <= spoolsInStock;
+}
+
+float roundToNearestCent(float value) {
+    return round(value * 100) / 100;
+}
+
+int getInt(int min, string prompt){
+    
+    int returnVal;
+    string stringNum;
+    bool inputNotValidated = true;
+
+    while(inputNotValidated){
+        
+        cout << prompt;
+        getline(cin, stringNum);
+        stringstream convert(stringNum);
+
+        if(convert >> returnVal && !(convert >> stringNum) && returnVal >= min){
+            inputNotValidated = false;
+        }
+
+        if(inputNotValidated){
+        
+            cin.clear();
+            cerr << "Invalid input. Please enter an integer greater than or equal to " << min << ".\n";
+        
+        }
+
+    }
+
+    return returnVal;
 }
