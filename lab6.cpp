@@ -17,6 +17,7 @@ const int SHIPPING_CHARGE = 10;
 const int SPOOL_COST = 100;
 const int LEFT_WIDTH = 20;
 const int RIGHT_WIDTH = 10;
+const int MIN_ORDER_SIZE = 1;
 
 int main(){
     //clear previous output
@@ -40,7 +41,7 @@ void getInput(int &spoolsOrdered, int &spoolsInStock, float &specialShippingChar
     cout << "Welcome to the Spool Order Calculator.\n\n";
     cout << "Please enter the following information:";
 
-    spoolsOrdered = getInt(1, "\nHow many spools are being ordered?\n");
+    spoolsOrdered = getInt(MIN_ORDER_SIZE, "\nHow many spools are being ordered?\n");
     spoolsInStock = getInt(0, "\nHow many spools are in stock?\n");
 
     cout << "\nAre there any special shipping charges? (Enter 0 if there are none):\n";
