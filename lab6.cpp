@@ -84,19 +84,19 @@ int getInt(int min, string prompt){
     
     int returnVal;
     string stringNum;
-    bool inputNotValidated = true;
+    bool inputValidated = false;
 
-    while(inputNotValidated){
+    while(!inputValidated){
         
         cout << prompt;
         getline(cin, stringNum);
         stringstream convert(stringNum);
 
         if(convert >> returnVal && !(convert >> stringNum) && returnVal >= min){
-            inputNotValidated = false;
+            inputValidated = true;
         }
 
-        if(inputNotValidated){
+        if(!inputValidated){
         
             cin.clear();
             cerr << "Invalid input. Please enter an integer greater than or equal to " << min << ".\n";
