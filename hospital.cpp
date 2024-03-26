@@ -1,9 +1,6 @@
 #include<iostream>
 using namespace std;
 
-//constants
-
-
 //prototypes
 void getInpatientData(int &daysSpent, float &dailyRate, float &medicationCharges, float &servicesCharges);
 void getOutpatientData(float &medicationCharges, float &servicesCharges);
